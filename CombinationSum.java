@@ -7,6 +7,7 @@ public class CombinationSum {
     public static void main(String[] args) {
         new CombinationSum().combinationSum(new int[] {2,3,6,7}, 7);
         new CombinationSum().combinationSum2(new int[] {10, 1, 2, 7, 6, 1, 5}, 8);
+        new CombinationSum().combinationSum3(3, 7);
     }
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
@@ -54,6 +55,26 @@ public class CombinationSum {
             }
             tempList.add(candidates[i]);
             backtrack2(returnList, tempList, candidates, target-candidates[i], i+1);
+            tempList.remove(tempList.size()-1);
+        }
+    }
+
+
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> returnList = new ArrayList<>();
+        backtrack3(returnList, new ArrayList<>(), k, n, 1);
+        return returnList;
+    }
+    
+    private void backtrack3(List<List<Integer>> returnList, List<Integer> tempList, int k, int n, int index) {
+        if (k == 0 && n ==0) {
+            returnList.add(new ArrayList<>(tempList));
+            return;
+        }
+        
+        for ( int i = index; i <= 9; i++) {
+            tempList.add(i);
+            backtrack3(returnList, tempList, k-1, n-i, i+1);
             tempList.remove(tempList.size()-1);
         }
     }

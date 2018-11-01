@@ -34,7 +34,39 @@ public class NQueens {
         }
     }
 
+    public int totalNQueens(int n) {
+        boolean[] column = new boolean[n];
+        boolean[] dia1 = new boolean[2*n];
+        boolean[] dia2 = new boolean[2*n];
+        
+        int[] count = new int[1];
+        backtracking(n, 0, column, dia1, dia2, count);
+        return count[0];
+    }
+    
+    public void backtracking(int n, int index, boolean[] col, boolean[] dia1, boolean[] dia2, int[] count) {
+        if (n == index) {
+            count[0]++;
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            int d1 = index + i;
+            int d2 = index - i + n;
+            
+            if (!col[i] && !dia1[d1] && !dia2[d2]) {
+                col[i] = true;
+                dia1[d1] = true;
+                dia2[d2] = true;
+                backtracking(n, index + 1, col, dia1, dia2, count);
+                col[i] = false;
+                dia1[d1] = false;
+                dia2[d2] = false;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         new NQueens().solveNQueens(4);
+        new NQueens().totalNQueens(4);
     }
 }
